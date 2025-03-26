@@ -1,0 +1,6 @@
+sim_build
+results.xml
+*.None
+.pytest_cache
+dump.vcd
+__pycache__/
