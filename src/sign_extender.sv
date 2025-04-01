@@ -1,3 +1,4 @@
+`default_nettype none
 module sign_extender (
     input wire imm_src,
     input wire [31:0] instruction,
