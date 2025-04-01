@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+
 from cocotb.runner import get_runner
+
 
 def generic_tb_runner(design_name):
     sim = os.getenv("SIM", "verilator")
@@ -11,9 +13,13 @@ def generic_tb_runner(design_name):
         sources=sources,
         hdl_toplevel=f"{design_name}",
         build_dir=f"./{design_name}/sim_build",
-        build_args=[] # use this to add args for verilator
+        build_args=[],  # use this to add args for verilator
     )
-    runner.test(hdl_toplevel=f"{design_name}", test_module=f"tb_{design_name}", test_dir=f"./{design_name}")
+    runner.test(
+        hdl_toplevel=f"{design_name}",
+        test_module=f"tb_{design_name}",
+        test_dir=f"./{design_name}",
+    )
 
 
 if __name__ == "__main__":
