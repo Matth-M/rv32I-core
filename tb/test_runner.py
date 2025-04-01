@@ -18,3 +18,4 @@ def generic_tb_runner(design_name):
 
 if __name__ == "__main__":
     generic_tb_runner("sign_extender")
+    generic_tb_runner("regfile")
