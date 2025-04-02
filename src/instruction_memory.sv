@@ -19,11 +19,7 @@ module instruction_memory #(
   end
 
   always_comb begin
-    // Read address should be words boundaries aligned, meaning address
-    // should be a multiple of 4 (4 bytes in a 32-bit word)
-    if (read_address[1:0] == "00") begin
-      instruction = memory[read_address[31:2]];  // use word index
-    end
+    instruction = memory[read_address[31:2]];  // use word index
   end
 
   always_ff @(posedge clk) begin
