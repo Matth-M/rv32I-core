@@ -1,7 +1,7 @@
 `default_nettype none
 module instruction_memory #(
-    parameter integer WORDS = 64,
-    parameter str MEM_INIT_FILENAME = ""
+    parameter WORDS = 64,
+    parameter MEM_INIT_FILENAME = ""
 ) (
     input logic [31:0] read_address,
     input logic reset_n,
