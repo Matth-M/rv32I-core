@@ -4,10 +4,9 @@ from decimal import Decimal
 
 @cocotb.test
 async def test(dut):
-    dut.imm_src.value = 0
     # lw x6, -4(x9)
     dut.instruction.value = 0xFFC4A303
-    dut.imm_src = 0
+    dut.imm_src.value = 0
     await Timer(Decimal(1), units="ns")
     dut._log.info(f"instruction: {hex(dut.instruction.value)}")
     dut._log.info(f"imm_ext: {hex(dut.imm_ext.value)}")
