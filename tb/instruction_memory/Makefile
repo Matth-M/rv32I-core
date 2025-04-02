@@ -1,6 +1,6 @@
 SIM ?= verilator
 TOPLEVEL_LANG ?= verilog
-EXTRA_ARGS += --trace --trace-structs
+EXTRA_ARGS += --trace --trace-structs -Wno-WIDTHTRUNC
 WAVES = 1
 
 TOPLEVEL = instruction_memory
