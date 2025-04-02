@@ -1,4 +1,4 @@
-import random
+from decimal import Decimal
 
 import cocotb
 from cocotb.clock import Clock
@@ -18,11 +18,11 @@ async def test(dut):
     address = 0x04
     dut.pc_next.value = address
     await RisingEdge(dut.clk)
-    await Timer(1, units="ns")
+    await Timer(Decimal(1), units="ns")
     assert dut.pc.value == address
 
     await RisingEdge(dut.clk)
     dut.reset_n.value = 0
     await RisingEdge(dut.clk)
-    await Timer(1, units="ns")
+    await Timer(Decimal(1), units="ns")
     assert dut.pc.value == 0

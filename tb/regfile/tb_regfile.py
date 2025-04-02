@@ -1,5 +1,5 @@
 import random
-
+from decimal import Decimal
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
@@ -14,7 +14,7 @@ async def test(dut):
     dut.write_data.value = 0xFFC4A303
     await RisingEdge(dut.clk)
     dut.read_address1.value = 0
-    await Timer(1, units="ns")
+    await Timer(Decimal(1), units="ns")
     assert dut.read_data1.value == 0
 
     for _ in range(100):
@@ -25,9 +25,9 @@ async def test(dut):
         dut.write_address.value = write_address
         dut.write_data.value = write_data
         dut.read_address1.value = write_address
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         await RisingEdge(dut.clk)
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         assert dut.read_data1.value == write_data
 
 
@@ -35,16 +35,16 @@ async def test(dut):
         dut.write_enable.value = 0
         new_value_no_override = random.randint(0, 2**32 - 1)
         dut.write_data.value = new_value_no_override
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         await RisingEdge(dut.clk)
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         assert dut.read_data1.value == write_data
 
 
         # Reset
         dut.reset_n.value = 0
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         await RisingEdge(dut.clk)
-        await Timer(1, units="ns")
+        await Timer(Decimal(1), units="ns")
         assert dut.read_data1.value == 0
 
