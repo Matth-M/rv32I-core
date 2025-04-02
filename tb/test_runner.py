@@ -34,3 +34,4 @@ if __name__ == "__main__":
     generic_tb_runner("regfile", project_path)
     generic_tb_runner("program_counter", project_path)
     generic_tb_runner("instruction_memory", project_path)
+    generic_tb_runner("data_memory", project_path)
