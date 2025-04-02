@@ -12,10 +12,17 @@ module instruction_memory #(
 
   logic [31:0] memory[WORDS-1];  // Memory containing WORDS elements of 32-bit
 
-  assign instruction = memory[read_address];
   initial begin
     if (MEM_INIT_FILENAME != "") begin
       $readmemh(MEM_INIT_FILENAME, memory);
+    end
+  end
+
+  always_comb begin
+    // Read address should be words boundaries aligned, meaning address
+    // should be a multiple of 4 (4 bytes in a 32-bit word)
+    if (read_address[1:0] == "00") begin
+      instruction = memory[read_address[31:2]];  // use word index
     end
   end
 
