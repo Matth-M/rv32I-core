@@ -6,3 +6,7 @@ clean:
 	@find ./tb -type f -name "*.None" -exec rm -f {} +
 	@find ./tb -type d -name ".pytest_cache" -exec rm -rf {} +
 	@find ./tb -type f -name "dump.vcd" -exec rm -f {} +
+
+.PHONY: test
+test:
+	python ./tb/test_runner.py
