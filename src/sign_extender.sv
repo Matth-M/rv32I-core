@@ -5,6 +5,6 @@ module sign_extender (
     output wire [31:0] imm_ext
 );
   assign imm_ext = imm_src ?
-	  {{20{instruction[31]}}, instruction[31:25], instruction[11:7]} : // S-Type
-	  {{20{instruction[31]}}, instruction[31:20]} ; // I-Type
+  {{20{instruction[31]}}, instruction[31:25], instruction[11:7]} : // S-Type
+  {{20{instruction[31]}}, instruction[31:20]};  // I-Type
 endmodule
