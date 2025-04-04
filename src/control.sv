@@ -19,6 +19,13 @@ module control (
 
   // Main decoder
   always_comb begin
+    reg_write_enable = 0;
+    imm_src = 2'b00;
+    alu_src = 0;
+    data_mem_write_enable = 0;
+    result_src = 0;
+    branch = 0;
+    alu_op = 2'b00;
     case (opcode)
       OPCODE_I_TYPE_LOAD: begin
         reg_write_enable = 1;
@@ -34,7 +41,6 @@ module control (
         imm_src = IMM_SRC_S_TYPE;
         alu_src = 1;
         data_mem_write_enable = 1;
-        result_src = 1;
         branch = 0;
         alu_op = ALU_OP_LOAD_STORE;
       end
