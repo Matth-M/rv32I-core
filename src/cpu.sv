@@ -104,7 +104,7 @@ module cpu (
       .MEM_INIT_FILENAME("./data_memory.hex")
   ) dmem (
       .clk(clk),
-      .reset_n(reset_n),
+      .reset_n(1'b1),
       .address(alu_result),
       .write_data(32'b0),
       .write_enable(data_mem_write_enable),
