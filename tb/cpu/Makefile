@@ -5,14 +5,8 @@ WAVES = 1
 
 TOPLEVEL = cpu
 VERILOG_SOURCES += $(PWD)/../../src/pkg.sv
-VERILOG_SOURCES += $(PWD)/../../src/$(TOPLEVEL).sv
-VERILOG_SOURCES += $(PWD)/../../src/alu.sv
-VERILOG_SOURCES += $(PWD)/../../src/control.sv
-VERILOG_SOURCES += $(PWD)/../../src/program_counter.sv
-VERILOG_SOURCES += $(PWD)/../../src/instruction_memory.sv
-VERILOG_SOURCES += $(PWD)/../../src/regfile.sv
-VERILOG_SOURCES += $(PWD)/../../src/sign_extender.sv
-VERILOG_SOURCES += $(PWD)/../../src/data_memory.sv
+VERILOG_SOURCES+=$(shell find ../../src -name "*.sv" -not -name "pkg.sv")
+
 
 # MODULE is the basename of the Python test file
 MODULE = tb_$(TOPLEVEL)
