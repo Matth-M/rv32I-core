@@ -34,7 +34,6 @@ if __name__ == "__main__":
         project_path = project_path.parent
 
     # Launch testbenches
-    generic_tb_runner("sign_extender", project_path)
-    generic_tb_runner("regfile", project_path)
-    generic_tb_runner("program_counter", project_path)
-    generic_tb_runner("memory", project_path)
+    tests = ["sign_extender", "regfile", "program_counter", "memory", "cpu"]
+    for t in tests:
+        generic_tb_runner(t, project_path)
