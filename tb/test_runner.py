@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import OrderedDict
 
 from cocotb.runner import get_runner
 
@@ -7,12 +8,15 @@ from cocotb.runner import get_runner
 def generic_tb_runner(design_name: str, project_path: Path):
     sim = os.getenv("SIM", "verilator")
     sources = list(project_path.glob("src/*.sv"))
+    # Package needs to be the first source to other files can use it
+    sources.insert(0,project_path.joinpath("src/pkg.sv"))
+    sources = list(OrderedDict.fromkeys(sources))
     runner = get_runner(sim)
     runner.build(
         sources=sources,
         hdl_toplevel=f"{design_name}",
         build_dir=project_path.joinpath(f"tb/{design_name}/sim_build"),
-        build_args=[],  # use this to add args for verilator
+        build_args=["-Wno-WIDTHTRUNC"],  # use this to add args for verilator
     )
     runner.test(
         hdl_toplevel=f"{design_name}",
