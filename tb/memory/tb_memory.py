@@ -5,16 +5,30 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
 
+@cocotb.coroutine
+async def reset(dut):
+    dut.reset_n.value = 0
+    await RisingEdge(dut.clk)
+    dut.reset_n.value = 1
+    await RisingEdge(dut.clk)
+
+
+@cocotb.test
+async def test_reset(dut):
+    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    await reset(dut)
+
+    for i in range(len(dut.memory)):
+        assert dut.memory[i].value == 0
+
+
 @cocotb.test
 async def test(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
     await RisingEdge(dut.clk)
-    # Reset
-    dut.reset_n.value = 0
+
+    await reset(dut)
     dut.write_enable.value = 0
-    await RisingEdge(dut.clk)
-    dut.reset_n.value = 1
-    await RisingEdge(dut.clk)
 
     data = [
         (0, 0x12345678),

@@ -1,5 +1,5 @@
 `default_nettype none
-module data_memory #(
+module memory #(
     parameter integer WORDS = 64,
     parameter MEM_INIT_FILENAME = ""
 ) (

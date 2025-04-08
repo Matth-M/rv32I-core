@@ -3,7 +3,7 @@ TOPLEVEL_LANG ?= verilog
 EXTRA_ARGS += --trace --trace-structs -Wno-WIDTHTRUNC
 WAVES = 1
 
-TOPLEVEL = instruction_memory
+TOPLEVEL = memory
 VERILOG_SOURCES += $(PWD)/../../src/$(TOPLEVEL).sv
 
 # MODULE is the basename of the Python test file

@@ -42,7 +42,7 @@ async def test_cpu_init(dut):
 
     # Check that instruction are still in memory
     for i in range(len(instruction_memory)):
-        assert dut.instr_mem.memory[i].value == instruction_memory[i]
+        assert dut.imem.memory[i].value == instruction_memory[i]
 
     # Test that instruction given by PC during executions are the ones expected
     # Only test for a few instructions, branching occurs after the start of the program

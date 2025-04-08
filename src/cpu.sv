@@ -55,13 +55,15 @@ module cpu (
       .pc(pc)
   );
 
-  instruction_memory #(
+  memory #(
       .MEM_INIT_FILENAME("./instruction_memory.hex")
   ) imem (
       .clk(clk),
       .reset_n(1'b1),
-      .read_address(pc),
-      .instruction(instruction)
+      .address(pc),
+      .data(instruction),
+      .write_data(32'b0),
+      .write_enable(1'b0)
   );
 
   assign regfile_read_address1 = instruction[19:15];
@@ -100,7 +102,7 @@ module cpu (
   );
 
   assign data_memory_write_data = read_data_registers2;
-  data_memory #(
+  memory #(
       .MEM_INIT_FILENAME("./data_memory.hex")
   ) dmem (
       .clk(clk),
