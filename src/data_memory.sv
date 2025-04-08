@@ -1,6 +1,7 @@
 `default_nettype none
 module data_memory #(
-    parameter integer WORDS = 64
+    parameter integer WORDS = 64,
+    parameter MEM_INIT_FILENAME = ""
 ) (
     input logic [31:0] address,
     input logic [31:0] write_data,
@@ -10,6 +11,12 @@ module data_memory #(
     output logic [31:0] data
 );
 
+
+  initial begin
+    if (MEM_INIT_FILENAME != "") begin
+      $readmemh(MEM_INIT_FILENAME, memory);
+    end
+  end
 
   logic [31:0] memory[WORDS-1];  // Memory containing WORDS elements of 32-bit
 

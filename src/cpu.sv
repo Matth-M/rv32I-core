@@ -100,7 +100,9 @@ module cpu (
   );
 
   assign data_memory_write_data = read_data_registers2;
-  data_memory data_mem (
+  data_memory #(
+      .MEM_INIT_FILENAME("./data_memory.hex")
+  ) data_mem (
       .clk(clk),
       .reset_n(reset_n),
       .address(alu_result),
