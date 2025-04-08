@@ -57,7 +57,7 @@ module cpu (
 
   instruction_memory #(
       .MEM_INIT_FILENAME("./instruction_memory.hex")
-  ) instr_mem (
+  ) imem (
       .clk(clk),
       .reset_n(1'b1),
       .read_address(pc),
@@ -68,7 +68,7 @@ module cpu (
   assign regfile_read_address2 = instruction[24:20];
   assign regfile_read_address2 = instruction[11:7];
   assign regfile_write_data = result_src ? data_memory_value : alu_result;
-  regfile registers (
+  regfile regfile (
       .clk(clk),
       .reset_n(reset_n),
       .write_enable(regfile_write_enable),
@@ -102,7 +102,7 @@ module cpu (
   assign data_memory_write_data = read_data_registers2;
   data_memory #(
       .MEM_INIT_FILENAME("./data_memory.hex")
-  ) data_mem (
+  ) dmem (
       .clk(clk),
       .reset_n(reset_n),
       .address(alu_result),
