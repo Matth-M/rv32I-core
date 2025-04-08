@@ -59,7 +59,7 @@ module cpu (
       .MEM_INIT_FILENAME("./instruction_memory.hex")
   ) instr_mem (
       .clk(clk),
-      .reset_n(reset_n),
+      .reset_n(1'b1),
       .read_address(pc),
       .instruction(instruction)
   );
