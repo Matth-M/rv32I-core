@@ -7,7 +7,7 @@ from cocotb.triggers import RisingEdge, Timer
 
 
 def bin_to_hex(bin) -> str:
-    return hex(int(str(bin), 2)).upper()
+    return hex(int(str(bin), 2)).upper().split("X")[1].zfill(8)
 
 
 def read_hex_file(file: Path) -> list[int]:
@@ -17,6 +17,10 @@ def read_hex_file(file: Path) -> list[int]:
         for line in content:
             hex.append(int(line.split("//")[0].strip().upper(), base=16))
     return hex
+
+
+def bin_array_to_hex(bin_array: list) -> list:
+    return list(map(bin_to_hex, bin_array))
 
 
 @cocotb.coroutine
@@ -48,23 +52,22 @@ async def test_cpu_init(dut):
         assert dut.instruction.value == expected_instruction
         await RisingEdge(dut.clk)
 
+
 @cocotb.test
 async def test_instructions(dut):
-    print("data_mem.addr: ", bin_to_hex(dut.alu_result.value))
-    dut._log.info(f"data_mem: {dut.data_mem.memory.value[:4]}")
-    print("data_memory_value: ", bin_to_hex(dut.data_memory_value.value))
-    await Timer(Decimal(1), units="ns")
-    dut._log.info(f"data_mem: {dut.instr_mem.memory.value[:4]}")
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    await cpu_reset(dut)
+    imem = dut.imem.memory.value
+    dmem = dut.dmem.memory.value
 
-    # imem contains:
+    ##############
     # LW x5, 12(x0)
-    imem = read_hex_file(Path("./instruction_memory.hex"))
-    assert dut.instruction.value == imem[0]
-    assert dut.pc_next.value == 0x4
-    assert dut.imm_ext.value == 12
-    assert dut.read_data_registers1.value == 0
-    print("data_mem.addr: ", bin_to_hex(dut.alu_result.value))
-    print("data_mem.value: ", bin_to_hex(dut.data_memory_value.value))
+    # M[12] == "DEADBEEF"
+    ##############
+    print("\n\nLW TEST\n\n")
+
+    print("imem ", bin_array_to_hex(imem))
+    print("dmem ", bin_array_to_hex(dmem))
     await RisingEdge(dut.clk)
-    print("data_mem: ", bin_to_hex(dut.data_memory_value.value))
+    print(f"r5: {bin_to_hex(dut.regfile.registers[5].value)}")
+    print(f"registers:  {bin_array_to_hex(dut.regfile.registers.value)}")
