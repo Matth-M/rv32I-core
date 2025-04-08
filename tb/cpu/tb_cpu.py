@@ -47,3 +47,24 @@ async def test_cpu_init(dut):
         expected_instruction = instruction_memory[i]
         assert dut.instruction.value == expected_instruction
         await RisingEdge(dut.clk)
+
+@cocotb.test
+async def test_instructions(dut):
+    print("data_mem.addr: ", bin_to_hex(dut.alu_result.value))
+    dut._log.info(f"data_mem: {dut.data_mem.memory.value[:4]}")
+    print("data_memory_value: ", bin_to_hex(dut.data_memory_value.value))
+    await Timer(Decimal(1), units="ns")
+    dut._log.info(f"data_mem: {dut.instr_mem.memory.value[:4]}")
+    cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+
+    # imem contains:
+    # LW x5, 12(x0)
+    imem = read_hex_file(Path("./instruction_memory.hex"))
+    assert dut.instruction.value == imem[0]
+    assert dut.pc_next.value == 0x4
+    assert dut.imm_ext.value == 12
+    assert dut.read_data_registers1.value == 0
+    print("data_mem.addr: ", bin_to_hex(dut.alu_result.value))
+    print("data_mem.value: ", bin_to_hex(dut.data_memory_value.value))
+    await RisingEdge(dut.clk)
+    print("data_mem: ", bin_to_hex(dut.data_memory_value.value))
