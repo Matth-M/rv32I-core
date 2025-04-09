@@ -108,7 +108,7 @@ module cpu (
       .clk(clk),
       .reset_n(1'b1),
       .address(alu_result),
-      .write_data(32'b0),
+      .write_data(data_memory_write_data),
       .write_enable(data_mem_write_enable),
       .data(data_memory_value)
   );
