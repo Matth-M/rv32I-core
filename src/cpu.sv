@@ -68,7 +68,7 @@ module cpu (
 
   assign regfile_read_address1 = instruction[19:15];
   assign regfile_read_address2 = instruction[24:20];
-  assign regfile_read_address2 = instruction[11:7];
+  assign regfile_write_address = instruction[11:7];
   assign regfile_write_data = result_src ? data_memory_value : alu_result;
   regfile regfile (
       .clk(clk),
