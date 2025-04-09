@@ -68,3 +68,12 @@ async def test_instructions(dut):
     # Wait for execution of the instruction, one clock cycle to write to register
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[5].value == 0xDEADBEEF
+
+    ##############
+    # SW x5, 8(x0)
+    # r5 == 0xDEADBEEF
+    ##############
+    print("\n\nSW TEST\n\n")
+    await RisingEdge(dut.clk)
+    # 8th bytes -> 3rd word
+    assert dut.dmem.memory[3].value == 0xDEADBEEF
