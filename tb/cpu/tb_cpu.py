@@ -34,6 +34,7 @@ async def cpu_reset(dut):
 @cocotb.test
 async def test_cpu_init(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
+    await Timer(Decimal(1), units="ns")
     await cpu_reset(dut)
 
     assert dut.pc.value == 0
@@ -57,17 +58,13 @@ async def test_cpu_init(dut):
 async def test_instructions(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
     await cpu_reset(dut)
-    imem = dut.imem.memory.value
-    dmem = dut.dmem.memory.value
 
     ##############
     # LW x5, 12(x0)
-    # M[12] == "DEADBEEF"
+    # M[12] == 0xDEADBEEF
     ##############
     print("\n\nLW TEST\n\n")
 
-    print("imem ", bin_array_to_hex(imem))
-    print("dmem ", bin_array_to_hex(dmem))
+    # Wait for execution of the instruction, one clock cycle to write to register
     await RisingEdge(dut.clk)
-    print(f"r5: {bin_to_hex(dut.regfile.registers[5].value)}")
-    print(f"registers:  {bin_array_to_hex(dut.regfile.registers.value)}")
+    assert dut.regfile.registers[5].value == 0xDEADBEEF
