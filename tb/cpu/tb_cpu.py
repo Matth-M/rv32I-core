@@ -59,21 +59,27 @@ async def test_instructions(dut):
     cocotb.start_soon(Clock(dut.clk, 10, units="ns").start())
     await cpu_reset(dut)
 
+    # Expected values of registers, imem and dmem
+    expected_registers = [0] * len(dut.regfile.registers)
+    expected_dmem = [0] * len(dut.dmem.memory)
+
     ##############
     # LW x5, 12(x0)
     # M[12] == 0xDEADBEEF
     ##############
-    print("\n\nLW TEST\n\n")
+    print("\nLW TEST\n")
+    expected_registers[5] = 0xDEADBEEF
 
     # Wait for execution of the instruction, one clock cycle to write to register
     await RisingEdge(dut.clk)
-    assert dut.regfile.registers[5].value == 0xDEADBEEF
+    assert dut.regfile.registers[5].value == expected_registers[5]
 
     ##############
     # SW x5, 8(x0)
     # r5 == 0xDEADBEEF
     ##############
-    print("\n\nSW TEST\n\n")
+    print("\nSW TEST\n")
+    expected_dmem[2] = 0xDEADBEEF
     await RisingEdge(dut.clk)
     # 8th bytes -> 3rd word
-    assert dut.dmem.memory[3].value == 0xDEADBEEF
+    assert dut.dmem.memory[2].value == expected_dmem[2]
