@@ -22,6 +22,9 @@ def read_hex_file(file: Path) -> list[int]:
 def bin_array_to_hex(bin_array: list) -> list:
     return list(map(bin_to_hex, bin_array))
 
+def truncate_32_bits(n: int) -> int:
+    return n & 0xFFFFFFFF
+
 
 @cocotb.coroutine
 async def cpu_reset(dut):
@@ -83,3 +86,11 @@ async def test_instructions(dut):
     await RisingEdge(dut.clk)
     # 8th bytes -> 3rd word
     assert dut.dmem.memory[2].value == expected_dmem[2]
+
+    ##############
+    # ADD x28, x5, x5
+    ##############
+    print("\nADD TEST\n")
+    expected_registers[28] = truncate_32_bits(expected_registers[5] + expected_registers[5])
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[28].value == expected_registers[28]
