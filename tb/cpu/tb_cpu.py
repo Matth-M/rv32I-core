@@ -1,29 +1,15 @@
 from decimal import Decimal
 from pathlib import Path
 
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import utils
+
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
-
-def bin_to_hex(bin) -> str:
-    return hex(int(str(bin), 2)).upper().split("X")[1].zfill(8)
-
-
-def read_hex_file(file: Path) -> list[int]:
-    hex = []
-    with file.open("r") as f:
-        content = f.readlines()
-        for line in content:
-            hex.append(int(line.split("//")[0].strip().upper(), base=16))
-    return hex
-
-
-def bin_array_to_hex(bin_array: list) -> list:
-    return list(map(bin_to_hex, bin_array))
-
-def truncate_32_bits(n: int) -> int:
-    return n & 0xFFFFFFFF
 
 
 @cocotb.coroutine
@@ -42,7 +28,7 @@ async def test_cpu_init(dut):
 
     assert dut.pc.value == 0
 
-    instruction_memory = read_hex_file(Path("./instruction_memory.hex"))
+    instruction_memory = utils.read_hex_file(Path("./instruction_memory.hex"))
 
     # Check that instruction are still in memory
     for i in range(len(instruction_memory)):
@@ -91,6 +77,8 @@ async def test_instructions(dut):
     # ADD x28, x5, x5
     ##############
     print("\nADD TEST\n")
-    expected_registers[28] = truncate_32_bits(expected_registers[5] + expected_registers[5])
+    expected_registers[28] = utils.truncate_32_bits(
+        expected_registers[5] + expected_registers[5]
+    )
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[28].value == expected_registers[28]
