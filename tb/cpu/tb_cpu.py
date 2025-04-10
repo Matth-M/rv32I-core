@@ -82,3 +82,15 @@ async def test_instructions(dut):
     )
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[28].value == expected_registers[28]
+
+    ##############
+    # SUB x29, x5, x28
+    ##############
+    print("\nSUB TEST\n")
+    expected_registers[29] = utils.truncate_32_bits(
+        expected_registers[5] - expected_registers[28]
+    )
+    print(hex(expected_registers[29]))
+    print("instruction:", utils.bin_to_hex(dut.instruction.value))
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[29].value == expected_registers[29]
