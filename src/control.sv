@@ -44,6 +44,14 @@ module control (
         branch = 0;
         alu_op = ALU_OP_LOAD_STORE;
       end
+      OPCODE_R_TYPE: begin
+        reg_write_enable = 1;
+        alu_src = 0;
+        data_mem_write_enable = 0;
+        result_src = 0;
+        branch = 0;
+        alu_op = ALU_OP_MATH;
+      end
       default: begin
         reg_write_enable = 0;
         imm_src = 2'b00;
