@@ -89,7 +89,8 @@ module cpu (
   );
 
   always_comb begin
-    if (alu_src) begin
+    alu_srcA = read_data_registers1;
+    if (alu_src == 1'b1) begin
       alu_srcB = imm_ext;
     end else alu_srcB = read_data_registers2;
   end
