@@ -14,7 +14,7 @@ async def test(dut):
 
     # sw x6, 8(x9)
     dut.instruction.value = 0x0064A423
-    dut.imm_src = 1
+    dut.imm_src.value = 1
     await Timer(Decimal(1), units="ns")
     dut._log.info(f"instruction: {hex(dut.instruction.value)}")
     dut._log.info(f"imm_ext: {hex(dut.imm_ext.value)}")
