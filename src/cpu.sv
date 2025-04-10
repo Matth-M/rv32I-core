@@ -22,7 +22,7 @@ module cpu (
   wire [31:0] alu_result;
   wire [31:0] data_memory_value;
   wire [31:0] data_memory_write_data;
-  wire [2:0] alu_control;
+  wire [3:0] alu_control;
   wire regfile_write_enable;
   wire data_mem_write_enable;
   wire alu_zero;
