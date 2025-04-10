@@ -9,4 +9,4 @@ clean:
 
 .PHONY: test
 test:
-	python ./tb/test_runner.py
+	python ./tb/test_runner.py $(if $(ONLY),--only $(ONLY))

@@ -1,3 +1,4 @@
+import argparse
 import os
 from pathlib import Path
 from typing import OrderedDict
@@ -26,14 +27,26 @@ def generic_tb_runner(design_name: str, project_path: Path):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run testbenches.")
+    parser.add_argument("--only", type=str, help="Run only the specified test.")
+    args = parser.parse_args()
+
     # Find project root, containing the .git directory
     # Allows the test runner to be ran from root or tb/
-    project_path = Path(__name__).resolve().parent
+    project_path = Path(__file__).resolve().parent
     directory_content = os.listdir(project_path)
     if ".git" not in directory_content:
         project_path = project_path.parent
 
     # Launch testbenches
-    tests = ["sign_extender", "regfile", "program_counter", "memory", "cpu"]
-    for t in tests:
-        generic_tb_runner(t, project_path)
+    tests = ["sign_extender", "regfile", "program_counter", "memory", "cpu", "alu"]
+    if args.only:
+        if args.only in tests:
+            generic_tb_runner(args.only, project_path)
+        else:
+            print(
+                f"Error: Test '{args.only}' not found in the list of available tests."
+            )
+    else:
+        for t in tests:
+            generic_tb_runner(t, project_path)
