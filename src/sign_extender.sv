@@ -1,8 +1,8 @@
 `default_nettype none
 module sign_extender (
-    input  wire [ 1:0] imm_src,
-    input  wire [31:0] instruction,
-    output wire [31:0] imm_ext
+    input  logic [ 1:0] imm_src,
+    input  logic [31:0] instruction,
+    output logic [31:0] imm_ext
 );
 
   always_comb begin

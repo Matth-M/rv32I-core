@@ -17,7 +17,7 @@ module cpu (
   wire [31:0] read_data_registers2;
   wire [1:0] imm_src;
   wire [31:0] imm_ext;
-  wire [31:0] alu_srcA;
+  logic [31:0] alu_srcA;
   logic [31:0] alu_srcB;
   wire [31:0] alu_result;
   wire [31:0] data_memory_value;
