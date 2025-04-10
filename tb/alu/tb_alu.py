@@ -7,7 +7,7 @@ from cocotb.triggers import Timer
 ALU_ADD = 0b0000
 ALU_SUB = 0b0001
 ALU_XOR = 0b0010
-ALU_OR  = 0b0011
+ALU_OR = 0b0011
 ALU_AND = 0b0100
 ALU_SLL = 0b0101
 ALU_SRL = 0b0110
