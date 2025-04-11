@@ -11,7 +11,7 @@ module control (
     output logic result_src,
     output logic branch,
     output logic [1:0] imm_src,
-    output logic [2:0] alu_control
+    output logic [3:0] alu_control
 );
 
   // Tells the alu decoder which instruction to indicate
@@ -90,17 +90,17 @@ module control (
           end else if (funct7 == 7'b0) begin
             alu_control = ALU_SRL;
           end else begin
-            alu_control = 3'b000;
+            alu_control = 4'b0000;
           end
         end else if (funct3 == FUN3_SLT) begin
           alu_control = ALU_SLT;
         end else if (funct3 == FUN3_SLTU) begin
           alu_control = ALU_SLTU;
         end else begin
-          alu_control = 3'b000;
+          alu_control = 4'b0000;
         end
       end
-      default: alu_control = 3'b000;
+      default: alu_control = 4'b0000;
     endcase
   end
 
