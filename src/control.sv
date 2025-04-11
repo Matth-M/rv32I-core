@@ -70,18 +70,32 @@ module control (
       ALU_OP_LOAD_STORE: alu_control = ALU_ADD;
       ALU_OP_BRANCH: alu_control = ALU_SUB;
       ALU_OP_MATH: begin
-        if (funct3 == 3'b000) begin
+        if (funct3 == FUN3_ADD_SUB) begin
           if ({opcode[5], funct7[5]} == 2'b11) begin
             alu_control = ALU_SUB;
           end else begin
             alu_control = ALU_ADD;
           end
-        end else if (funct3 == 3'b010) begin
-          alu_control = ALU_SLT;
-        end else if (funct3 == 3'b110) begin
+        end else if (funct3 == FUN3_XOR) begin
+          alu_control = ALU_XOR;
+        end else if (funct3 == FUN3_OR) begin
           alu_control = ALU_OR;
-        end else if (funct3 == 3'b111) begin
+        end else if (funct3 == FUN3_AND) begin
           alu_control = ALU_AND;
+        end else if (funct3 == FUN3_SLL) begin
+          alu_control = ALU_SLL;
+        end else if (funct3 == FUN3_SRL_SRA) begin
+          if (funct7 == 7'h20) begin
+            alu_control = ALU_SRA;
+          end else if (funct7 == 7'b0) begin
+            alu_control = ALU_SRL;
+          end else begin
+            alu_control = 3'b000;
+          end
+        end else if (funct3 == FUN3_SLT) begin
+          alu_control = ALU_SLT;
+        end else if (funct3 == FUN3_SLTU) begin
+          alu_control = ALU_SLTU;
         end else begin
           alu_control = 3'b000;
         end
