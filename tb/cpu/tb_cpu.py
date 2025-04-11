@@ -1,15 +1,13 @@
+import os
+import sys
 from decimal import Decimal
 from pathlib import Path
 
-import os
-import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import utils
-
 import cocotb
+import utils
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
-
 
 
 @cocotb.coroutine
