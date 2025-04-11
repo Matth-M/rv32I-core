@@ -94,3 +94,17 @@ async def test_instructions(dut):
     print("instruction:", utils.bin_to_hex(dut.instruction.value))
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[29].value == expected_registers[29]
+
+    ##############
+    # XOR x30, x28, x29
+    ##############
+    print("\nXOR TEST\n")
+    expected_registers[30] = utils.truncate_32_bits(
+        expected_registers[28] ^ expected_registers[29]
+    )
+    print("r28:", utils.bin_to_hex(dut.regfile.registers[28].value))
+    print("r29:", utils.bin_to_hex(dut.regfile.registers[29].value))
+    print("alu control", dut.alu_control.value)
+    print("instruction:", utils.bin_to_hex(dut.instruction.value))
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[30].value == expected_registers[30]
