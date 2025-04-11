@@ -102,9 +102,75 @@ async def test_instructions(dut):
     expected_registers[30] = utils.truncate_32_bits(
         expected_registers[28] ^ expected_registers[29]
     )
-    print("r28:", utils.bin_to_hex(dut.regfile.registers[28].value))
-    print("r29:", utils.bin_to_hex(dut.regfile.registers[29].value))
-    print("alu control", dut.alu_control.value)
-    print("instruction:", utils.bin_to_hex(dut.instruction.value))
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[30].value == expected_registers[30]
+
+    ##############
+    # OR x31, x30, x5
+    ##############
+    print("\nOR TEST\n")
+    expected_registers[31] = utils.truncate_32_bits(
+        expected_registers[30] | expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[31].value == expected_registers[31]
+
+    ##############
+    # AND x6, x30, x5
+    ##############
+    print("\nAND TEST\n")
+    expected_registers[6] = utils.truncate_32_bits(
+        expected_registers[30] & expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[6].value == expected_registers[6]
+
+    ##############
+    # SLL x7, x6, x5
+    ##############
+    print("\nSLL TEST\n")
+    expected_registers[7] = utils.truncate_32_bits(
+        expected_registers[6] << expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[7].value == expected_registers[7]
+
+    ##############
+    # SRL x28, x7, x6
+    ##############
+    print("\nSRL TEST\n")
+    expected_registers[28] = utils.truncate_32_bits(
+        expected_registers[7] >> expected_registers[6]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[7].value == expected_registers[7]
+
+    ##############
+    # SRA x7, x6, x5
+    ##############
+    print("\nSRA TEST\n")
+    expected_registers[7] = utils.truncate_32_bits(
+        expected_registers[6] >> expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[7].value == expected_registers[7]
+
+    ##############
+    # SLT x7, x6, x5
+    ##############
+    print("\nSLT TEST\n")
+    expected_registers[7] = utils.truncate_32_bits(
+        expected_registers[6] < expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[7].value == expected_registers[7]
+
+    ##############
+    # SLTU x7, x6, x5
+    ##############
+    print("\nSLTU TEST\n")
+    expected_registers[7] = utils.truncate_32_bits(
+        expected_registers[6] < expected_registers[5]
+    )
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[7].value == expected_registers[7]

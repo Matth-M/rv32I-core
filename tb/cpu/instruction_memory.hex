@@ -3,3 +3,10 @@
 00528e33 // add x28, x5, x5
 41c28eb3 // sub x29, x5,x28
 01de4f33 // xor x30, x28, x29
+005f6fb3 // or x31, x30, x5
+005f7333 // and x6, x30, x5
+005313b3 // sll x7, x6, x5
+0063de33 // srl x28, x7, x6
+405353b3 // sra x7, x6, x5
+005323b3 // slt x7, x6, x5
+01eebe33 // sltu x7, x6, x5
