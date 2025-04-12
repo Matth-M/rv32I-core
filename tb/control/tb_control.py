@@ -50,7 +50,6 @@ async def test_S_type(dut):
 
 @cocotb.test
 async def test_R_type(dut):
-    # ADD
     rtype_opcode = 0b0110011
     dut.opcode.value = rtype_opcode
     rtypes = {
