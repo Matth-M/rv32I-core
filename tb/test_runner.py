@@ -39,7 +39,7 @@ if __name__ == "__main__":
         project_path = project_path.parent
 
     # Launch testbenches
-    tests = ["sign_extender", "regfile", "program_counter", "memory", "cpu", "alu"]
+    tests = ["sign_extender", "regfile", "program_counter", "memory", "cpu", "alu", "control"]
     if args.only:
         if args.only in tests:
             generic_tb_runner(args.only, project_path)
