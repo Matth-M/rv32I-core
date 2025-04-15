@@ -27,6 +27,15 @@ def read_regfile(registers: list) -> str:
     return s
 
 
+def read_expected_regfile(registers: list) -> str:
+    registers_hex  = list(map(lambda x: hex(x).split("x")[1].upper().zfill(8), registers))
+    s = "["
+    for i in range(len(registers_hex) - 1):
+        s += f"{i}: {registers_hex[i]}, "
+    s += f"{len(registers_hex)-1}: {registers_hex[-1]}]\n"
+    return s
+
+
 def truncate_32_bits(n: int) -> int:
     return n & 0xFFFFFFFF
 
