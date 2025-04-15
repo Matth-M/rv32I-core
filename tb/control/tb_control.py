@@ -16,7 +16,7 @@ ALU_SLTU = 0b1001
 
 
 @cocotb.test
-async def test_I_type(dut):
+async def test_I_LOAD(dut):
     # LW
     opcode = int("0000011", 2)
     funct3 = 0x2
@@ -63,6 +63,32 @@ async def test_R_type(dut):
         "SRA": {"funct3": 0x5, "funct7": 0x20, "expected_alu_control": ALU_SRA},
         "SLT": {"funct3": 0x2, "funct7": 0x00, "expected_alu_control": ALU_SLT},
         "SLTU": {"funct3": 0x3, "funct7": 0x00, "expected_alu_control": ALU_SLTU},
+    }
+    for instruction in rtypes.values():
+        dut.funct3.value = instruction["funct3"]
+        dut.funct7.value = instruction["funct7"]
+        await Timer(Decimal(1), units="ns")
+        assert dut.reg_write_enable.value == 1
+        assert dut.alu_src.value == 0
+        assert dut.data_mem_write_enable.value == 0
+        assert dut.branch.value == 0
+        assert dut.alu_control.value == instruction["expected_alu_control"]
+
+
+@cocotb.test
+async def test_I_MATH_type(dut):
+    rtype_opcode = 0b0110011
+    dut.opcode.value = rtype_opcode
+    rtypes = {
+        "ADDI": {"funct3": 0x0, "funct7": 0x00, "expected_alu_control": ALU_ADD},
+        "XORI": {"funct3": 0x4, "funct7": 0x00, "expected_alu_control": ALU_XOR},
+        "ORI": {"funct3": 0x6, "funct7": 0x00, "expected_alu_control": ALU_OR},
+        "ANDI": {"funct3": 0x7, "funct7": 0x00, "expected_alu_control": ALU_AND},
+        "SLLI": {"funct3": 0x1, "funct7": 0x00, "expected_alu_control": ALU_SLL},
+        "SRLI": {"funct3": 0x5, "funct7": 0x00, "expected_alu_control": ALU_SRL},
+        "SRAI": {"funct3": 0x5, "funct7": 0x20, "expected_alu_control": ALU_SRA},
+        "SLTI": {"funct3": 0x2, "funct7": 0x00, "expected_alu_control": ALU_SLT},
+        "SLTIU": {"funct3": 0x3, "funct7": 0x00, "expected_alu_control": ALU_SLTU},
     }
     for instruction in rtypes.values():
         dut.funct3.value = instruction["funct3"]
