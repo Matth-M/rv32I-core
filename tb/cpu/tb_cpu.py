@@ -170,3 +170,27 @@ async def test_instructions(dut):
     )
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[7].value == expected_registers[7]
+
+    ##############
+    # addi x1, x1, 0x457
+    ##############
+    print("ADDI TEST")
+    expected_registers[1] = utils.truncate_32_bits(expected_registers[1] + 0x457)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[1].value == expected_registers[1]
+
+    ##############
+    # xori x2, x25, 17
+    ##############
+    print("XORI TEST")
+    expected_registers[2] = utils.truncate_32_bits(expected_registers[28] ^ 17)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[2].value == expected_registers[2]
+
+    ##############
+    # ori x3, x29, 682
+    ##############
+    print("ORI TEST")
+    expected_registers[3] = utils.truncate_32_bits(expected_registers[29] | 682)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[3].value == expected_registers[3]

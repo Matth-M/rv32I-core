@@ -10,3 +10,6 @@
 405353b3 // sra x7, x6, x5
 005323b3 // slt x7, x6, x5
 005333b3 // sltu x7, x6, x5
+45708093 // addi x1, x1, 0x456
+011cc113 // xori x2, x25, 17
+2aaee193 // ori x3, x29, 682
