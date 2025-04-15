@@ -54,7 +54,7 @@ async def test_instructions(dut):
     # LW x5, 12(x0)
     # M[12] == 0xDEADBEEF
     ##############
-    print("\nLW TEST\n")
+    print("LW TEST")
     expected_registers[5] = 0xDEADBEEF
 
     # Wait for execution of the instruction, one clock cycle to write to register
@@ -65,7 +65,7 @@ async def test_instructions(dut):
     # SW x5, 8(x0)
     # r5 == 0xDEADBEEF
     ##############
-    print("\nSW TEST\n")
+    print("SW TEST")
     expected_dmem[2] = 0xDEADBEEF
     await RisingEdge(dut.clk)
     # 8th bytes -> 3rd word
@@ -74,7 +74,7 @@ async def test_instructions(dut):
     ##############
     # ADD x28, x5, x5
     ##############
-    print("\nADD TEST\n")
+    print("ADD TEST")
     expected_registers[28] = utils.truncate_32_bits(
         expected_registers[5] + expected_registers[5]
     )
@@ -84,19 +84,17 @@ async def test_instructions(dut):
     ##############
     # SUB x29, x5, x28
     ##############
-    print("\nSUB TEST\n")
+    print("SUB TEST")
     expected_registers[29] = utils.truncate_32_bits(
         expected_registers[5] - expected_registers[28]
     )
-    print(hex(expected_registers[29]))
-    print("instruction:", utils.bin_to_hex(dut.instruction.value))
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[29].value == expected_registers[29]
 
     ##############
     # XOR x30, x28, x29
     ##############
-    print("\nXOR TEST\n")
+    print("XOR TEST")
     expected_registers[30] = utils.truncate_32_bits(
         expected_registers[28] ^ expected_registers[29]
     )
@@ -106,7 +104,7 @@ async def test_instructions(dut):
     ##############
     # OR x31, x30, x5
     ##############
-    print("\nOR TEST\n")
+    print("OR TEST")
     expected_registers[31] = utils.truncate_32_bits(
         expected_registers[30] | expected_registers[5]
     )
@@ -116,7 +114,7 @@ async def test_instructions(dut):
     ##############
     # AND x6, x30, x5
     ##############
-    print("\nAND TEST\n")
+    print("AND TEST")
     expected_registers[6] = utils.truncate_32_bits(
         expected_registers[30] & expected_registers[5]
     )
@@ -126,7 +124,7 @@ async def test_instructions(dut):
     ##############
     # SLL x7, x6, x5
     ##############
-    print("\nSLL TEST\n")
+    print("SLL TEST")
     expected_registers[7] = utils.truncate_32_bits(
         expected_registers[6] << expected_registers[5]
     )
@@ -136,7 +134,7 @@ async def test_instructions(dut):
     ##############
     # SRL x28, x7, x6
     ##############
-    print("\nSRL TEST\n")
+    print("SRL TEST")
     expected_registers[28] = utils.truncate_32_bits(
         expected_registers[7] >> expected_registers[6]
     )
@@ -146,7 +144,7 @@ async def test_instructions(dut):
     ##############
     # SRA x7, x6, x5
     ##############
-    print("\nSRA TEST\n")
+    print("SRA TEST")
     expected_registers[7] = utils.truncate_32_bits(
         expected_registers[6] >> expected_registers[5]
     )
@@ -156,7 +154,7 @@ async def test_instructions(dut):
     ##############
     # SLT x7, x6, x5
     ##############
-    print("\nSLT TEST\n")
+    print("SLT TEST")
     expected_registers[7] = utils.truncate_32_bits(
         expected_registers[6] < expected_registers[5]
     )
@@ -166,7 +164,7 @@ async def test_instructions(dut):
     ##############
     # SLTU x7, x6, x5
     ##############
-    print("\nSLTU TEST\n")
+    print("SLTU TEST")
     expected_registers[7] = utils.truncate_32_bits(
         expected_registers[6] < expected_registers[5]
     )
