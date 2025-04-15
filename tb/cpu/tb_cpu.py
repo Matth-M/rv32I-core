@@ -194,3 +194,11 @@ async def test_instructions(dut):
     expected_registers[3] = utils.truncate_32_bits(expected_registers[29] | 682)
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[3].value == expected_registers[3]
+
+    ##############
+    # andi x4, x30, 0x111
+    ##############
+    print("ANDI TEST")
+    expected_registers[4] = utils.truncate_32_bits(expected_registers[30] & 0x111)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[4].value == expected_registers[4]
