@@ -139,7 +139,7 @@ async def test_instructions(dut):
         expected_registers[7] >> expected_registers[6]
     )
     await RisingEdge(dut.clk)
-    assert dut.regfile.registers[7].value == expected_registers[7]
+    assert dut.regfile.registers[28].value == expected_registers[28]
 
     ##############
     # SRA x7, x6, x5

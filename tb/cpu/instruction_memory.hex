@@ -9,4 +9,4 @@
 0063de33 // srl x28, x7, x6
 405353b3 // sra x7, x6, x5
 005323b3 // slt x7, x6, x5
-01eebe33 // sltu x7, x6, x5
+005333b3 // sltu x7, x6, x5
