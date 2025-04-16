@@ -16,3 +16,6 @@
 111f7213 // andi x4, x30, 0x111
 003f9293 // slli x5, x31, 0x3
 00a3d313 // srli x6, x7, 0xA
+0081d393 // srai x7, x3, 0x8
+7773A793 // slti x15, x7, 0x777
+8887B813 // sltiu x16, x16, 0x888
