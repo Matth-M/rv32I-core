@@ -14,3 +14,5 @@
 011cc113 // xori x2, x25, 17
 2aaee193 // ori x3, x29, 682
 111f7213 // andi x4, x30, 0x111
+003f9293 // slli x5, x31, 0x3
+00a3d313 // srli x6, x7, 0xA

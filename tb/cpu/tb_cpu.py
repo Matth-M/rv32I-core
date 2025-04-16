@@ -202,3 +202,19 @@ async def test_instructions(dut):
     expected_registers[4] = utils.truncate_32_bits(expected_registers[30] & 0x111)
     await RisingEdge(dut.clk)
     assert dut.regfile.registers[4].value == expected_registers[4]
+
+    ##############
+    # slli x5, x31, 0x3
+    ##############
+    print("SLLI TEST")
+    expected_registers[5] = utils.truncate_32_bits(expected_registers[31] << 0x3)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[5].value == expected_registers[5]
+
+    ##############
+    # srli x6, x7, 0xA
+    ##############
+    print("SRLI TEST")
+    expected_registers[6] = utils.truncate_32_bits(expected_registers[7] >> 0xA)
+    await RisingEdge(dut.clk)
+    assert dut.regfile.registers[6].value == expected_registers[6]
