@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from typing import OrderedDict
 
-from cocotb.runner import get_runner
+from cocotb_tools.runner import get_runner
 
 
 def generic_tb_runner(design_name: str, project_path: Path):
